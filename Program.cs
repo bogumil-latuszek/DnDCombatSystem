@@ -339,7 +339,7 @@ namespace DnDBattleSystem
         }
         public static void CheckIfBattleIsPossible()
         {
-            if()
+            // TODO:
         }
         public static List<Player> PlayersOnScene = new List<Player>();
         public static List<Player> PlayersOnBattlefield = new List<Player>();
@@ -372,18 +372,7 @@ namespace DnDBattleSystem
             } while (preparations == true);
             for (int i= 0; i < EveryoneOnBattlefield.Count; i++)
             {
-                /*if (EnemiesOnBattlefield[i].GetType == Player)
-                {
-                    Console.WriteLine("Attack Name:");
-                    string attackName = Console.ReadLine();
-
-                }
-                else
-                {
-                    EnemiesOnBattlefield[i].MyEnemieslist = PlayersOnBattlefield;
-                    EnemiesOnBattlefield[i].AttackTurn(PlayersOnBattlefield);
-                }*/
-                EveryoneOnBattlefield[i].AttackTurn(PlayersOnBattlefield);
+                EveryoneOnBattlefield[i].AttackTurn(EveryoneOnBattlefield);
             }
         }
     }
