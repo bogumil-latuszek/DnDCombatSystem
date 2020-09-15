@@ -183,12 +183,23 @@ namespace DnDBattleSystem
             int dodge = RandomGen.Next(101);
             return (dodge > enemyTarget.dodgeChance);
         }
-        public List<Creature> MyEnemieslist = new List<Creature>();
-        virtual public void AttackTurn(List<Creature> PlayersOnBattlefield)
+        virtual public List<Creature> SelectMyEnemies(List<Creature> EveryoneOnBattlefield)
         {
-            this.MyEnemieslist = PlayersOnBattlefield;
+            List<Creature> MyEnemies = new List<Creature>();
+            foreach (Creature nextCreature in EveryoneOnBattlefield)
+            {
+                if (nextCreature is Player)
+                {
+                    MyEnemies.Add(nextCreature);
+                }
+            }
+            return MyEnemies;
+        }
+        public List<Creature> MyEnemieslist = new List<Creature>();
+        virtual public void AttackTurn(List<Creature> EveryoneOnBattlefield)
+        {
+            this.MyEnemieslist = SelectMyEnemies(EveryoneOnBattlefield);
             StatusEffectsUpdate();
-
             if (this.HPValue <= 0)
             {
                 Console.Write("this enemy is dead");
@@ -220,7 +231,7 @@ namespace DnDBattleSystem
         }
         PoisonedSwordSlash slash1 = new PoisonedSwordSlash();
     }
-    class Player : Creature
+    public class Player : Creature
     {
         public string Name;
         public static Random RandomGen = new Random();
@@ -234,6 +245,10 @@ namespace DnDBattleSystem
         public Player() : base()
         {
 
+        }
+        override public List<Creature> SelectMyEnemies(List<Creature> EveryoneOnBattlefield)
+        {
+            return EveryoneOnBattlefield;
         }
         public Attacks GetAttack(List<Attacks> AvailableAttacks)
         {
@@ -253,7 +268,7 @@ namespace DnDBattleSystem
                 {
                     Console.WriteLine("Wrong number selected - try again");
                 }
-            } while (true););
+            } while (true);
         }
         public int ChooseEnemy(List<Creature> AvailableEnemies)
         {
@@ -275,7 +290,7 @@ namespace DnDBattleSystem
                 }
             } while (true);
         }
-        public void CommenceFight() //this is similar to CoommenceFight() in base class
+        public void CommenceFight()
         {
             Console.WriteLine("Write attack name:");
             string attackName = Console.ReadLine(); //will this give us only attack name?
