@@ -344,21 +344,55 @@ namespace DnDBattleSystem
     }
     class Program
     {
+        public static List<Creature> EnemiesLibrary = new List<Creature>();
+        public static List<Player> PlayersOnScene = new List<Player>();
+        public static List<Creature> EveryoneOnBattlefield = new List<Creature>();
         public static void AddPlayerToScene()
         {
-            Console.WriteLine("");
+            Console.WriteLine("Write Player Name");
+            Player Pepko = new Player();
+            Pepko.Name = "Pepko";
+            PlayersOnScene.Add(Pepko);
         }
-        public static void AddPlayerToBattlefield()
+        public static void AddCreatureToBattlefield()
         {
+            Console.WriteLine("write reature's name:");
+            string creaturesName = Console.ReadLine();
+            bool taskFinished = false;
+            foreach (Creature nextCreature in EnemiesLibrary)
+            {
+                if (creaturesName == nextCreature.Name)
+                {
+                    EveryoneOnBattlefield.Add(nextCreature);
+                    Console.WriteLine("Added" + nextCreature.Name + "to the Battlefield");
+                    taskFinished = true;
+                    break;
+                }
+            }
+            if(taskFinished == false) 
+            {
+                foreach (Player nextPlayer in PlayersOnScene)
+                {
+                    if (creaturesName == nextPlayer.Name)
+                    {
+                        EveryoneOnBattlefield.Add(nextPlayer);
+                        Console.WriteLine("Added" + nextPlayer.Name + "to the Battlefield");
+                        taskFinished = true;
+                        break;
+                    }
+                }
+            }
+            if(taskFinished = false)
+            {
+                AddCreatureToBattlefield();
+            }
 
         }
         public static void CheckIfBattleIsPossible()
         {
             // TODO:
         }
-        public static List<Player> PlayersOnScene = new List<Player>();
-        public static List<Player> PlayersOnBattlefield = new List<Player>();
-        public static List<Creature> EveryoneOnBattlefield = new List<Creature>();
+
         static void Main(string[] args)
         {
 
@@ -374,7 +408,7 @@ namespace DnDBattleSystem
                         AddPlayerToScene();
                         break;
                     case 2:
-                        AddPlayerToBattlefield();
+                        AddCreatureToBattlefield();
                         break;
                     case 3:
                         CheckIfBattleIsPossible();
